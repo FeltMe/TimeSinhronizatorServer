@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Policy;
 using System.Text;
 
 namespace Server
@@ -17,13 +18,12 @@ namespace Server
             while (true)
             {
                 byte[] data = receiver.Receive(ref remoteIp);
-                Console.WriteLine(Encoding.Unicode.GetString(data));
-                IPEndPoint ip = remoteIp as IPEndPoint;
-
-                data = Encoding.Unicode.GetBytes("Ok!");
-                Console.WriteLine(data.ToString());
-
-                receiver.Send(data, data.Length, ip.Address.ToString(), ip.Port);
+                if (Encoding.Unicode.GetString(data) == "Send me a date")
+                {
+                    IPEndPoint ip = remoteIp as IPEndPoint;
+                    data = Encoding.Unicode.GetBytes(DateTime.Now.ToString());
+                    receiver.Send(data, data.Length, ip.Address.ToString(), ip.Port);
+                }
             }
         }
     }

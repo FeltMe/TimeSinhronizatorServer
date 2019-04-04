@@ -13,16 +13,17 @@ namespace Time_sinhronizator
         static void Main(string[] args)
         {
             UdpClient sender = new UdpClient();
-            Console.WriteLine("Send message:");
-            byte[] data = Encoding.Unicode.GetBytes(Console.ReadLine());
-
-            sender.Send(data, data.Length, "127.0.0.1", 8080);
-            IPEndPoint remoteIp = null;
-
-            //Прийом даних
-            data = sender.Receive(ref remoteIp);
-
-            Console.WriteLine(Encoding.Unicode.GetString(data));
+            Console.WriteLine("Pres f to take date :)");
+            var s = Console.ReadLine();
+            if(s == "f")
+            {
+                byte[] data = Encoding.Unicode.GetBytes("Send me a date");
+                sender.Send(data, data.Length, "127.0.0.1", 8080);
+                IPEndPoint remoteIp = null;
+                data = sender.Receive(ref remoteIp);
+                Console.WriteLine(Encoding.Unicode.GetString(data));
+            }
+            else Console.WriteLine("Eror press");
         }
     }
 }
